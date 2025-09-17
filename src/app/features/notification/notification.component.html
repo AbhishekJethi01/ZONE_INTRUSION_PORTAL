@@ -1,0 +1,151 @@
+<div id="pageBody" class="page-wrapper fullscreen">
+    <app-sidebar class="sidebar"></app-sidebar>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+        <div class="row g-2 g-md-3 align-items-stretch">
+            <div class="col-12">
+                <div class="dt-table">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <div class="d-flex align-items-center">
+                        <label class="me-2 mb-0">Search:</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Type to search" />
+                      </div>
+                      <div class="d-flex align-items-center gap-1">
+                        <button id="btnDownload" class="btn btn-secondary btn-sm"><i data-feather="download"></i></button>
+                      </div>
+                    </div>
+                    <app-table></app-table>
+                  </div>
+            </div>
+        </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal fade cstModal modal-style-2" id="addCamera" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content pt-2">
+      <div class="modal-header d-flex align-items-center text-center flex-wrap py-2 border-0">
+        <h4 class="modal-title fs-6 me-0 fw-bold text-center w-100 d-flex flex-row align-items-center gap-2"
+          id="liveEventPopupLabel">
+          <img src="assets/images/add-camera.svg" height="32" alt="" />
+          Add Camera
+        </h4>
+        <button type="button" class="btn-close img-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-4 z-index-1 mt-0">
+        <form autocomplete="off">
+          <fieldset class="alpr-radius">
+            <legend class="fw-bold">Basic Camera Details</legend>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="mb-2 mb-md-0">
+                  <label for="startDate" class="form-label">Camera Name<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="cameraName" name="cameraName"
+                    placeholder="Enter camera name">
+                  <small class="text-danger d-none" id="cameraNameRequired">Camera Name is required.</small>
+                  <small class="text-danger d-none" id="addModalCameraNameExists">Camera Name exists.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mb-2 mb-md-0">
+
+                  <label for="cDirection" class="form-label">Camera Direction<span class="text-danger">*</span></label>
+                  <select class="form-select" id="cameraDirection" name="cameraDirection"
+                    aria-label="cDirection">
+                    <option selected [value]="''">Select</option>
+                    <option [value]="'Entry'">Entry</option>
+                    <option [value]="'Exit'">Exit</option>
+                    <option [value]="'Dynamic'">Dynamic</option>
+                  </select>
+                  <small class="text-danger d-none" id="cameraDirectionRequired">Camera Direction is required.</small>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="row">
+            <div class="col-sm-6">
+                <div class="my-1">
+                  <label for="cDirection" class="form-label">Boom Barrier</label>
+                  
+                </div>
+              </div>
+          </div>
+          <fieldset class="alpr-radius mt-3">
+            <legend class="fw-bold">Connection Details</legend>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="mb-2">
+                  <label for="RTSP_URL" class="form-label">RTSP URL</label>
+                  <input type="text" class="form-control" id="cameraurl" name="cameraurl" 
+                    placeholder="rtsp://">
+                </div>
+              </div>
+
+              <!-- OR Separator -->
+              <div class="col-12">
+                <div class="d-flex align-items-center">
+                  <hr class="flex-grow-1 my-1">
+                  <span class="px-2 fw-bold text-muted dark-text-white">OR</span>
+                  <hr class="flex-grow-1 my-1">
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="mb-2">
+                  <label for="uName" class="form-label">User Name</label>
+                  <input type="text" class="form-control" id="cameraUserName" name="cameraUserName" placeholder="Enter user name">
+                  <small class="text-danger d-none" id="cameraUsernameRequired">Username / RTSP URL is required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mb-2">
+                  <label for="ipAdress" class="form-label">IP Address</label>
+                  <input type="text" class="form-control" id="cameraIpAddress" name="cameraIpAddress">
+                  <small class="text-danger d-none" id="cameraIpAddressRequired">IPAddress / RTSP URL is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mb-2">
+                  <label for="Password" class="form-label">Password</label>
+                  <div class="position-relative">
+                    <input type="password" #campasswordInput class="form-control" id="cameraPassword"
+                      name="cameraPassword" placeholder="Enter Password">
+                    <i class="bi bi-eye-slash-fill passwordIcon"
+                      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                  </div>
+                  <small class="text-danger d-none" id="cameraPasswordRequired">Password / RTSP URL is required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mb-2">
+                  <label for="Port" class="form-label">Port</label>
+                  <input type="text" class="form-control" id="cameraPort" name="cameraPort" placeholder="554">
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="mb-2 mb-md-0">
+                  <label for="Port" class="form-label">Substream</label>
+                  <input type="text" class="form-control" id="cameraSubstream" name="cameraSubstream" placeholder="Enter substream">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="col-sm-12 d-flex align-items-center justify-content-center gap-1 mt-3">
+            <button class="btn btn-sm btn-primary" type="submit">Save</button>
+            <button class="btn btn-sm btn-warning" type="button">Reset</button>
+            <button class="btn btn-sm btn-danger" type="button">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div> -->
+    </div>
+  </div>
+</div>

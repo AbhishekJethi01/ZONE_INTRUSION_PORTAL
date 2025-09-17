@@ -1,0 +1,257 @@
+<nav class="navbar navbar-expand header-nav">
+  <a class="sidebar-toggle header-menubar d-none" (click)="toggleSlide()">
+    <img src="assets/images/menu-bar.svg">
+  </a>
+  <img src="assets/images/reg-eye-zon-logo.svg" class="full-logo d-md-block me-md-4" height="24" alt="" />
+  <div class="navbar-collapse collapse">
+
+    <ul class="navbar-nav navbar-align">
+      <li class="nav-item dropdown">
+        <a class="nav-icon dropdown-toggle rounded-circle notification-dropdown text-white rounded-pill text-decoration-none toggle-arrow-none"
+          href="#" id="alertsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="position-relative d-flex align-items-center justify-content-between px-2 gap-1">
+            <icon [name]="'notificationfill'" class="lh-0"></icon>
+            <span class="indicator fw-500">124</span>
+          </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+          <div class="dropdown-menu-header bg-site border-0 mb-0 text-white alpr-top-radius">
+            124 New Notifications
+          </div>
+          <div class="list-group rounded-0 border-0 p-0 m-0">
+            <a [routerLink]="'/Zone/notification'"
+              class="list-group-item notification-lists border-0 cursor-pointer unread-notification">
+              <div class="d-flex align-items-center gap-2 p-1">
+                <div class="img alpr-radius"><img src="assets/images/live-camera-img.png" class="img-fluid alpr-radius"
+                    style="width: 42px;" alt=""></div>
+                <div class="details d-flex gap-1 flex-column">
+                  <div><span class="fw-500 title text-site">Vehicle Number:</span> <span>AP39TU4483</span> </div>
+                  <div><span class="fw-500 title text-site">Event Type:</span> <span
+                      class="px-2 py-1 bg-danger-light text-dark alpr-radius">Blacklisted</span> </div>
+                </div>
+              </div>
+            </a>
+            <a [routerLink]="'/Zone/notification'"
+              class="list-group-item notification-lists border-0 cursor-pointer unread-notification">
+              <div class="d-flex align-items-center gap-2 p-1">
+                <div class="img alpr-radius"><img src="assets/images/live-camera-img.png" class="img-fluid alpr-radius"
+                    style="width: 42px;" alt=""></div>
+                <div class="details d-flex gap-1 flex-column">
+                  <div><span class="fw-500 title text-site">Vehicle Number:</span> <span>AP39TU4483</span> </div>
+                  <div><span class="fw-500 title text-site">Event Type:</span> <span
+                      class="px-2 py-1 bg-danger-light text-dark alpr-radius">Blacklisted</span> </div>
+                </div>
+              </div>
+            </a>
+            <a [routerLink]="'/Zone/notification'" class="list-group-item notification-lists border-0 cursor-pointer">
+              <div class="d-flex align-items-center gap-2 p-1">
+                <div class="img alpr-radius"><img src="assets/images/live-camera-img.png" class="img-fluid alpr-radius"
+                    style="width: 42px;" alt=""></div>
+                <div class="details d-flex gap-1 flex-column">
+                  <div><span class="fw-500 title text-site">Vehicle Number:</span> <span>AP39TU4483</span> </div>
+                  <div><span class="fw-500 title text-site">Event Type:</span> <span
+                      class="px-2 py-1 bg-danger-light text-dark alpr-radius">Blacklisted</span> </div>
+                </div>
+              </div>
+            </a>
+            <a [routerLink]="'/Zone/notification'" class="list-group-item notification-lists border-0 cursor-pointer">
+              <div class="d-flex align-items-center gap-2 p-1">
+                <div class="img alpr-radius"><img src="assets/images/live-camera-img.png" class="img-fluid alpr-radius"
+                    style="width: 42px;" alt=""></div>
+                <div class="details d-flex gap-1 flex-column">
+                  <div><span class="fw-500 title text-site">Vehicle Number:</span> <span>AP39TU4483</span> </div>
+                  <div><span class="fw-500 title text-site">Event Type:</span> <span
+                      class="px-2 py-1 bg-success-light text-dark alpr-radius">Whitelist</span> </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="dropdown-menu-footer text-center py-2">
+            <a [routerLink]="'/Zone/notification'" class="text-muted cursor-pointer">Show all notifications</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle toggle-arrow-none d-flex align-items-center gap-2 p-0" href="#"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="assets/images/user-image-alpr.svg" class="avatar img-fluid rounded-circle" alt="">
+          <span class="d-none d-md-block text-white">{{userName}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end header-Profile-dropdown border-0 shadow mt-2">
+          <div class="Profile-drop-header bg-site border-0 mb-2">
+            <div class="d-flex align-items-center">
+              <img src="assets/images/user-image-alpr.svg" class="avatar img-fluid rounded" alt="">
+              <div class="d-flex flex-column ms-2">
+                <h6 class="fw-bold mb-0 text-white">{{userName}}</h6>
+                <!-- <p class="mb-0 text-light">Marketing Manager</p> -->
+              </div>
+            </div>
+          </div>
+          <a class="dropdown-item" href="javascript:void(0)" (click)="openProfileModal()"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-user">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>Profile</a>
+          <a class="dropdown-item" href="javascript:void(0)" (click)="openChangePasswordModal()">
+            <i class="bi bi-key text-center"></i>
+            Change Password
+          </a>
+          <!-- <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#newUser"><i data-feather="user-plus"></i> New User</a> -->
+          <a class="dropdown-item d-sm-none" href="./notification.html"><i data-feather="bell"></i> Notifications</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-white fw-bold" href="javascript:void(0)" (click)="logout()"><i
+              data-feather="log-out"></i> Log out</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="modal fade cstModal modal-style-2" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content pt-2">
+      <div class="modal-header d-flex align-items-center text-center flex-wrap py-2 border-0">
+        <h4 class="modal-title fs-6 me-0 fw-bold text-center w-100 d-flex flex-row align-items-center gap-2"
+          id="liveEventPopupLabel">
+          <img src="assets/images/edit-profile-new.svg" height="32" alt="" />
+          Edit Profile
+        </h4>
+        <button type="button" class="btn-close img-dark" (click)="closeProfileModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3 mt-0">
+        <form #userForm="ngForm" autocomplete="off" (ngSubmit)="updateUser()">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-2">
+                <label for="UserName" class="form-label">User Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="UserName" name="userName" [(ngModel)]="userModel.userName"
+                  (ngModelChange)="onChange($event,'userName');commonService.hideErrors(['userRequired', 'userExists'])"
+                  [disabled]="isEditCase" placeholder="Enter user name">
+                <small class="text-danger d-none" id="userRequired">User name is required.</small>
+                <small class="text-danger d-none" id="userExists">User name exists.</small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-2">
+                <label for="PhoneNumber" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                <input maxlength="10" type="text" class="form-control" id="PhoneNumber" name="phoneNumber"
+                  [(ngModel)]="userModel.phoneNumber"
+                  (ngModelChange)="onChange($event,'phoneNumber');commonService.hideErrors(['phoneRequired','phoneExists'])"
+                  (keydown)="commonService.blockNonNumericKeys($event)"
+                  (paste)="commonService.onPasteOnlyNumbers($event)" placeholder="Enter phone number">
+                <small class="text-danger d-none" id="phoneRequired">Phone Number is required.</small>
+                <small class="text-danger d-none" id="phoneExists">Phone Number exists.</small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-2">
+                <label for="emailID" class="form-label">Email ID</label>
+                <input type="email" class="form-control" id="emailID" name="emailId" [(ngModel)]="userModel.emailId"
+                  (ngModelChange)="onChange($event,'emailId');commonService.hideErrors(['emailValid','emailIdExists'])"
+                  placeholder="Enter email ID">
+                <small class="text-danger d-none" id="emailValid">Invalid email format.</small>
+                <small class="text-danger d-none" id="emailIdExists">Email ID exists.</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 d-flex align-items-center justify-content-center gap-1 mt-3">
+            <button class="btn btn-sm btn-primary" type="submit">Save</button>
+            <button class="btn btn-sm btn-warning" type="button" (click)="reset()">Reset</button>
+            <button class="btn btn-sm btn-danger" type="button" data-bs-dismiss="modal"
+              (click)="closeProfileModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade cstModal modal-style-2" id="changePasswordModal" data-bs-backdrop="static"
+  data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content pt-2">
+      <div class="modal-header d-flex align-items-center text-center flex-wrap py-2 border-0">
+        <h4 class="modal-title fs-6 me-0 fw-bold text-center w-100 d-flex flex-row align-items-center gap-2"
+          id="liveEventPopupLabel">
+          <img src="assets/images/edit-profile-new.svg" height="32" alt="" />
+          Change Password
+        </h4>
+        <button type="button" class="btn-close img-dark" (click)="closeChangePasswordModal()"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3 mt-0">
+        <form #userProfileForm="ngForm" (ngSubmit)="changePassword()" autocomplete="off">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-2">
+                <label for="oldPassword" class="form-label">Old Password</label>
+                <div class="position-relative">
+                  <input type="password" #oldPasswordInput class="form-control" id="oldPassword" name="oldPassword"
+                    [(ngModel)]="oldPassword" (ngModelChange)="commonService.hideErrors(['oldPassworderrormsg'])"
+                    placeholder="Enter old password.">
+                  <i class="bi bi-eye-slash-fill passwordIcon" (click)="oldTogglePasswordVisibility()"
+                    #oldPassToggleIcon
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                </div>
+                <small class="text-danger d-none" id="oldPassworderrormsg">* Old Password is required.</small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-2">
+                <label for="newPassword" class="form-label">New Password</label>
+                <div class="position-relative">
+                  <input type="password" #editpasswordInput class="form-control pe-5" id="newPassword"
+                    name="newPassword" [(ngModel)]="newPassword"
+                    (ngModelChange)="commonService.hideErrors(['newPasswordRequareerrormsg','newPasswordFormaterrormsg'])"
+                    placeholder="Enter new password." />
+                  <i class="bi bi-eye-slash-fill passwordIcon" (click)="edittogglePasswordVisibility()" #edittoggleIcon
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                </div>
+                <small class="text-danger d-none" id="newPasswordRequareerrormsg">* New Password is required.</small>
+                <small class="text-danger d-none" id="newPasswordFormaterrormsg">* Password must be a minimum of 8
+                  characters and include one lowercase, one uppercase, one numeric value, and one special character
+                  [!,&#64;,#,$,%,^,&,*,(,),_].</small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-2">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <div class="position-relative">
+                  <input type="password" #editconfpasswordInput class="form-control pe-5" id="confirmPassword"
+                    name="confirmPassword" [(ngModel)]="confirmPassword"
+                    (ngModelChange)="commonService.hideErrors(['confmPassworderrormsg'])"
+                    placeholder="Enter confirm password." />
+                  <i class="bi bi-eye-slash-fill passwordIcon" (click)="editconftogglePasswordVisibility()"
+                    #editconftoggleIcon
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                </div>
+                <small class="text-danger d-none" id="confmPassworderrormsg">* The confirm password does not match the
+                  password.</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 d-flex align-items-center justify-content-center gap-1 mt-3">
+            <button class="btn btn-sm btn-primary" type="submit">Save</button>
+            <button class="btn btn-sm btn-warning" type="button" (click)="resetPasswordFiels()">Reset</button>
+            <button class="btn btn-sm btn-danger" type="button" (click)="closeChangePasswordModal()">Cancel</button>
+          </div>
+          <div *ngIf="errorMsg" class="alert alert-danger alert-dismissible fade show mt-1" role="alert"
+            style="padding-top: 4px; padding-bottom: 4px; font-size: 13px;">
+            {{ errorMsg }}
+          </div>
+          <div *ngIf="successMsg" class="alert alert-success alert-dismissible fade show mt-1" role="alert"
+            style="padding-top: 4px; padding-bottom: 4px; font-size: 13px;">
+            {{ successMsg }}
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

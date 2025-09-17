@@ -1,0 +1,197 @@
+<div id="pageBody" class="page-wrapper fullscreen">
+    <app-sidebar class="sidebar"></app-sidebar>
+    <div class="main">
+        <app-header></app-header>
+        <main class="content dashboard-container">
+            <div class="row g-2 g-md-3 align-items-stretch">
+                <div class="col-12 col-sm-6 col-lg-5 col-xl-4 d-flex flex-column gap-2 gap-md-3">
+                    <div class="row d-flex g-2 g-md-3">
+                        <div class="col-6">
+                            <div class="card stat-card card-three h-100">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-3 d-flex align-items-center flex-wrap">Person<span
+                                            class="px-2 py-1 rounded-pill text-dark ms-1">Today</span></h6>
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex flex-wrap flex-column gap-1">
+                                            <div class="stat-value">{{totalPerson}}</div>
+                                            <span class="stat-change">{{personPercentage}}% <i
+                                                    class="bi bi-arrow-up-right"></i></span>
+                                        </div>
+                                        <div class="icon-circle circle-3 ms-auto">
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-man">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M10 16v5" />
+                                                <path d="M14 16v5" />
+                                                <path d="M9 9h6l-1 7h-4z" />
+                                                <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+                                                <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+                                                <path d="M12 4m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card stat-card card-one h-100">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-3 d-flex align-items-center flex-wrap">Vehicle<span
+                                            class="px-2 py-1 rounded-pill text-dark ms-1">Today</span></h6>
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <div class="d-flex flex-column gap-1">
+                                            <div class="stat-value">{{totalVehicle}}</div>
+                                            <span class="stat-change">{{vehiclePercentage}}% <i
+                                                    class="bi bi-arrow-up-right"></i></span>
+                                        </div>
+                                        <div class="icon-circle circle-1 ms-auto">
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-car">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                <path
+                                                    d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row d-flex g-2 g-md-3">
+                        <div class="col-6">
+                            <div class="card stat-card card-two h-100">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-3 d-flex align-items-center flex-wrap">Animal<span
+                                            class="px-2 py-1 rounded-pill text-dark ms-1">Today</span></h6>
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <div class="d-flex flex-column gap-1">
+                                            <div class="stat-value">{{totalAnimal}}</div>
+                                            <span class="stat-change">{{animalPercentage}}% <i
+                                                    class="bi bi-arrow-up-right"></i></span>
+                                        </div>
+                                        <div class="icon-circle circle-2 ms-auto">
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-horse">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path
+                                                    d="M7 10l-.85 8.507a1.357 1.357 0 0 0 1.35 1.493h.146a2 2 0 0 0 1.857 -1.257l.994 -2.486a2 2 0 0 1 1.857 -1.257h1.292a2 2 0 0 1 1.857 1.257l.994 2.486a2 2 0 0 0 1.857 1.257h.146a1.37 1.37 0 0 0 1.364 -1.494l-.864 -9.506h-8c0 -3 -3 -5 -6 -5l-3 6l2 2l3 -2z" />
+                                                <path d="M22 14v-2a3 3 0 0 0 -3 -3" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card stat-card card-four h-100">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-3 d-flex align-items-center flex-wrap">Others<span
+                                            class="px-2 py-1 rounded-pill text-dark ms-1">Today</span></h6>
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex flex-wrap flex-column gap-1">
+                                            <div class="stat-value">{{totalOther}}</div>
+                                            <span class="stat-change">{{otherPercentage}}% <i
+                                                    class="bi bi-arrow-up-right"></i></span>
+                                        </div>
+                                        <div class="icon-circle circle-4 ms-auto">
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-7 col-xl-8">
+                    <div class="card chart-card h-100">
+                        <div class="card-body">
+                            <h6 class="card-title">Monthly Status</h6>
+                            <highcharts-chart id="statusChart" *ngIf="chartOptions && chartOptions.series?.length"
+                                [Highcharts]="Highcharts" [options]="chartOptions" [update]="updateFlag"
+                                style="width: 100%; min-height: 180px; display: block;">
+                            </highcharts-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-2 g-md-3 mt-0">
+                <div class="col-lg-9">
+                    <div class="mat-elevation-z8">
+                        <app-shareable-table [dataSource]="dataSource" [columns]="columns" [length]="length"
+                            [tableName]="tableName"></app-shareable-table>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="status-list-container d-flex flex-column gap-2 gap-md-3 thin-scroll">
+                        <div class="d-flex flex-column gap-2 gap-md-3">
+                            <div class="card status-card" *ngFor="let camera of displayedCameras">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="icon-circle rounded-circle me-2">
+                                            <i class="bi bi-camera-fill fs-6"></i>
+                                        </span>
+                                        <h6 class="mb-0 fw-semibold">{{ camera.cameraName }}</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-between text-center">
+                                        <div class="column-block">
+                                            <div class="circle text-white">{{ camera.totalPerson }}</div>
+                                            <small class="text-muted d-block">Human</small>
+                                        </div>
+                                        <div class="column-block">
+                                            <div class="circle text-white">{{ camera.totalAnimal }}</div>
+                                            <small class="text-muted d-block">Animal</small>
+                                        </div>
+                                        <div class="column-block">
+                                            <div class="circle text-white">{{ camera.totalVehicle }}</div>
+                                            <small class="text-muted d-block">Vehicle</small>
+                                        </div>
+                                        <div class="column-block">
+                                            <div class="circle text-white">{{ camera.totalOther }}</div>
+                                            <small class="text-muted d-block">Others</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card blink-btn py-2 px-3 dashboard-side-card border-0 card-shadow"
+                            (click)="!isToggleDisabled && toggleCameraView()">
+                            <div class="d-flex">
+                                <div class="mb-1 py-2 fs-sm cursor-pointer d-flex justify-content-center align-items-center gap-2 w-100"
+                                    [ngClass]="{ 'text-muted': isToggleDisabled }">
+                                    {{ isToggleDisabled ? 'No More Cameras' : toggleButtonText }}
+                                    <svg *ngIf="!isToggleDisabled" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-circle-arrow-down"
+                                        [ngClass]="{ 'rotate-180': showAllCameras }">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0 -18" />
+                                        <path d="M16 12l-4 -4" />
+                                        <path d="M16 12h-8" />
+                                        <path d="M12 16l4 -4" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

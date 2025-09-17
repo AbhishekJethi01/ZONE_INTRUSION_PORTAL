@@ -1,0 +1,133 @@
+<div id="pageBody" class="page-wrapper fullscreen">
+    <app-sidebar class="sidebar"></app-sidebar>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+        <div class="row g-2 g-md-3 align-items-stretch">
+            <div class="col-12 d-flex align-items-center flex-wrap d-md-none">
+              <h3 class="card-title mb-0">Camera Management</h3>
+            </div>
+            <div class="col-12">
+                <div class="dt-table">
+                    <div class="d-flex align-items-center mb-1">
+                        <div class="ms-auto d-flex align-items-center gap-1">
+                            <button id="btnAddcamers" class="btn btn-primary btn-sm" (click)="openModal('add')">
+                            <i data-feather="plus"></i> Add Camera
+                            </button>
+                        </div>
+                    </div>
+                    <app-shareable-table [dataSource]="dataSource" [columns]="columns" [actionButtons]="actionButtons"
+                  [length]="length" (pageChange)="pageChanged($event)" (sortChange)="announceSortChange($event)"
+                  (navigationMode)="handleNavigationMode($event)" [tableName]="tableName"
+                  [disablePagination]="tableName === 'camera'"></app-shareable-table>
+                </div>
+            </div>
+        </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal fade cstModal modal-style-2" id="cameraModal" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content pt-2">
+      <div class="modal-header d-flex align-items-center text-center flex-wrap py-2 border-0">
+        <h4 class="modal-title fs-6 me-0 fw-bold text-center w-100 d-flex flex-row align-items-center gap-2"
+          id="liveEventPopupLabel">
+          <img src="assets/images/add-camera.svg" height="32" alt="" />
+          {{isEditMode ? 'Edit' : 'Add'}} Camera
+        </h4>
+        <button type="button" class="btn-close img-dark" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body pt-4 z-index-1 mt-0">
+        <form autocomplete="off" #cameraForm="ngForm" (ngSubmit)="cameraFormSubmit(cameraForm)">
+          <fieldset class="alpr-radius">
+            <legend class="fw-bold">Basic Camera Details</legend>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="mb-2 mb-md-0">
+                  <label for="startDate" class="form-label">Camera Name<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="cameraName" name="cameraName" [(ngModel)]="model.cameraName" (ngModelChange)="onChange($event,'cameraName');commonService.hideErrors(['cameraNameRequired','cameraNameExists'])"
+                    placeholder="Enter camera name">
+                  <small class="text-danger d-none" id="cameraNameRequired">Camera Name is required.</small>
+                  <small class="text-danger d-none" id="cameraNameExists">Camera Name exists.</small>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="alpr-radius mt-3">
+            <legend class="fw-bold">Connection Details</legend>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="mb-2">
+                  <label for="RTSP_URL" class="form-label">RTSP URL</label>
+                  <input type="text" class="form-control" id="cameraurl" name="url" [(ngModel)]="model.url" (ngModelChange)="onChange($event,'url')"
+                    placeholder="rtsp://">
+                </div>
+              </div>
+
+              <!-- OR Separator -->
+              <div class="col-12">
+                <div class="d-flex align-items-center">
+                  <hr class="flex-grow-1 my-1">
+                  <span class="px-2 fw-bold text-muted dark-text-white">OR</span>
+                  <hr class="flex-grow-1 my-1">
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="mb-2">
+                  <label for="uName" class="form-label">User Name</label>
+                  <input type="text" class="form-control" id="cameraUserName" name="cameraUserName" [(ngModel)]="model.cameraUserName" (ngModelChange)="onChange($event,'cameraUserName');commonService.hideErrors(['cameraUsernameRequired'])" placeholder="Enter user name">
+                  <small class="text-danger d-none" id="cameraUsernameRequired">Username / RTSP URL is required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mb-2">
+                  <label for="ipAdress" class="form-label">IP Address</label>
+                  <input type="text" class="form-control" id="cameraIpAddress" name="cameraIpAddress" [(ngModel)]="model.cameraIpAddress" (ngModelChange)="onChange($event,'cameraIpAddress');commonService.hideErrors(['cameraIpAddressRequired'])">
+                  <small class="text-danger d-none" id="cameraIpAddressRequired">IPAddress / RTSP URL is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mb-2">
+                  <label for="Password" class="form-label">Password</label>
+                  <div class="position-relative">
+                    <input type="password" #campasswordInput class="form-control" id="cameraPassword"
+                      name="cameraPassword" [(ngModel)]="model.cameraPassword" (ngModelChange)="onChange($event,'cameraPassword');commonService.hideErrors(['cameraPasswordRequired'])" placeholder="Enter Password">
+                    <i class="bi bi-eye-slash-fill passwordIcon" (click)="camtogglePasswordVisibility()" #toggleIcon
+                      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                  </div>
+                  <small class="text-danger d-none" id="cameraPasswordRequired">Password / RTSP URL is required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mb-2">
+                  <label for="Port" class="form-label">Port</label>
+                  <input type="text" class="form-control" id="cameraPort" name="cameraPort" [(ngModel)]="model.cameraPort" (ngModelChange)="onChange($event,'cameraPort')"placeholder="554">
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="mb-2 mb-md-0">
+                  <label for="Port" class="form-label">Substream</label>
+                  <input type="text" class="form-control" id="cameraSubstream" name="cameraSubstream" [(ngModel)]="model.cameraSubstream" (ngModelChange)="onChange($event,'cameraSubstream')" placeholder="Enter substream">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="col-sm-12 d-flex align-items-center justify-content-center gap-1 mt-3">
+            <button class="btn btn-sm btn-primary" type="submit">Save</button>
+            <button class="btn btn-sm btn-warning" type="button" (click)="resetForm()">Reset</button>
+            <button class="btn btn-sm btn-danger" type="button" (click)="closeModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div> -->
+    </div>
+  </div>
+</div>

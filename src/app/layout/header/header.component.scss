@@ -1,0 +1,13 @@
+:host ::ng-deep .notification-dropdown{background: var(--linear-gradient-h-1);
+  &:hover {
+    svg{
+    transition: all 0.3s ease;
+    transform: rotate(-20deg); 
+    }
+  }  
+}
+.notification-lists{
+    .img{
+        img{ border: 1px solid rgb(227, 245, 255);}
+    }
+}

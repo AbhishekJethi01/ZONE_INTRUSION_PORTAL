@@ -1,0 +1,232 @@
+<div id="pageBody" class="page-wrapper fullscreen">
+  <app-sidebar class="sidebar"></app-sidebar>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+      <div class="row g-2 g-md-3 align-items-stretch">
+        <div class="col-12 d-flex align-items-center flex-wrap d-md-none">
+          <h3 class="card-title mb-0">Event</h3>
+        </div>
+        <div class="col-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" [ngClass]="{ active: activeTabId === 'hisEvent' }"
+                (click)="activateTab('hisEvent')">
+                Historical Event
+              </button>
+            </li>
+            <!-- <li class="nav-item" role="presentation">
+              <button class="nav-link" [ngClass]="{ active: activeTabId === 'misEvent' }"
+                (click)="activateTab('misEvent')">
+                Missing Event
+              </button>
+            </li> -->
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content mt-0 bg-transparent border-0 px-0">
+            <div class="tab-pane fade" [ngClass]="{ 'show active': activeTabId === 'hisEvent' }">
+              <div class="dt-table">
+                <div #filterPanel class="table-filter border mb-3 alpr-radius"
+                  [style.display]="showFilterPanel ? 'block' : 'none'">
+                  <div class="filter-body position-relative">
+                    <span class="filterClose filterCloseBtn cursor-pointer ms-auto fs-6" (click)="closeFilterPanel()"><i
+                        class="bi bi-x-circle-fill text-danger"></i></span>
+                    <!-- <h6 class="mb-0 px-3 pt-3 fw-500 border-bottom border-bottom-2 pb-2 d-flex align-items-center"><i class="me-2" data-feather="filter"></i> Filter Vehicle
+                          <span class="filterClose cursor-pointer ms-auto fs-5" (click)="closeFilterPanel()"><i class="bi bi-x-circle-fill text-danger"></i></span>
+                          </h6> -->
+                    <form class="p-3">
+                      <div class="row g-2">
+                        <div class="col-lg-2 col-md-3">
+                          <div class="mb-2">
+                            <label for="startDate" class="form-label fw-bold">Start Date</label>
+                            <input type="date" class="form-control" id="startDate" [(ngModel)]="eventstartDate"
+                              [ngModelOptions]="{ standalone: true }" (ngModelChange)="updateFilterParams()"
+                              placeholder="Start Date" [max]="today" />
+                            <small class="text-danger d-none" id="datetimeCheck">
+                              End Date cannot be earlier than Start Date.
+                            </small>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="mb-2">
+                            <label for="startTime" class="form-label fw-bold">Start Time</label>
+                            <input type="time" class="form-control" id="startTime" [(ngModel)]="eventstartTime"
+                              [ngModelOptions]="{ standalone: true }" (ngModelChange)="updateFilterParams()"
+                              placeholder="Start Time" />
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                          <div class="mb-2">
+                            <label for="endDate" class="form-label fw-bold">End Date</label>
+                            <input type="date" class="form-control" id="endDate" [(ngModel)]="eventendDate"
+                              [ngModelOptions]="{ standalone: true }" (ngModelChange)="updateFilterParams()"
+                              placeholder="End Date" [max]="today" />
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="mb-2">
+                            <label for="endTime" class="form-label fw-bold">End Time</label>
+                            <input type="time" class="form-control" id="endTime" [(ngModel)]="eventendTime"
+                              [ngModelOptions]="{ standalone: true }" (ngModelChange)="updateFilterParams()"
+                              placeholder="End Time" />
+                          </div>
+                        </div>
+                        <div class="col-sm-12 d-flex flex-column gap-1 text-end">
+                          <label for="" class="form-label mb-0 d-none">&nbsp;</label>
+                          <div class="d-flex align-items-center gap-1 ms-auto">
+                            <button class="btn btn-sm btn-primary" type="submit" (click)="applyAdvanceFilter()">Filter</button>
+                            <button class="btn btn-sm btn-danger filterClose" type="button"
+                              (click)="cancelFilter()">Clear</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <div class="d-flex align-items-center">
+                    <label class="me-2 mb-0">Search:</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="Type to search" [(ngModel)]="filterValue" (input)="debounce.next($event)"  />
+                  </div>
+                  <div class="d-flex align-items-center gap-1">
+                    <button id="btnDownload" class="btn btn-secondary btn-sm"><i data-feather="download"></i>
+
+                    </button>
+                    <button id="btnFilter" class="btn btn-primary btn-sm"
+                      [ngClass]="isFilterOpen ? 'btn-warning' : 'btn-primary'" (click)="toggleFilterPanel()"><i
+                        data-feather="filter"></i> Advance Filter </button>
+                  </div>
+                </div>
+                <app-shareable-table [dataSource]="dataSource" [columns]="columns" [actionButtons]="actionButtons"
+                  [length]="length" (pageChange)="pageChanged($event)" (sortChange)="announceSortChange($event)"
+                  (navigationMode)="handleNavigationMode($event)" [tableName]="tableName"></app-shareable-table>
+              </div>
+            </div>
+            <div class="tab-pane fade" [ngClass]="{ 'show active': activeTabId === 'misEvent' }">
+              <h5>Profile</h5>
+              <p>Profile content goes here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div #liveEventPopup class="modal fade cstModal modal-style-2" id="liveEventPopup" data-bs-backdrop="static"
+  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content pt-2">
+      <div class="modal-header d-flex align-items-center text-center flex-wrap py-2 border-0">
+        <h4 class="modal-title fs-6 me-3 fw-bold text-center w-100 d-flex flex-row align-items-center gap-2" id="">
+          <img src="assets/images/vehicle-img-icon.svg" height="32" alt="" />
+          Event Details
+        </h4>
+        <button type="button" class="btn-close img-dark" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body z-index-3 mt-0 pt-3">
+        <div class="liveEvent-list-details">
+          <div class="row list align-items-stretch align-items-center flex-wrap flex-md-nowrap g-2">
+
+            <div class="col-md-6 d-flex details">
+              <div class="d-flex gap-1 flex-column border p-3 border-0 alpr-radius h-100 w-100 flex-table">
+                <div class="d-flex align-items-center flex-wrap gap-2 fs-body">
+                  <div class="px-2 py-1 alpr-radius d-flex align-items-center gap-1 fs-6 fw-semibold text-nowrap type">
+                    <icon [name]="eventData?.objectType"></icon> {{eventData?.objectType |
+                    capitalizeFirst }}
+                  </div>
+                </div>
+                <!-- <hr class="my-2"> -->
+                <div class="rounded-2 vehicle-details-lists d-flex flex-column gap-2 p-0 mt-3">
+                  <div class="d-flex align-items-center justify-content-between fs-body">
+                    <span class="title text-dark me-1 d-flex align-items-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-camera">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path
+                          d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+                        <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                      </svg>
+                    </span>
+                    <span class="ms-2 flex-grow-1 fw-bold">{{eventData?.cameraName}}</span>
+                  </div>
+                  <hr class="my-0">
+                  <div class="d-flex align-items-center justify-content-between fs-body">
+                    <span class="title text-dark me-1 d-flex align-items-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                        <path d="M16 3l0 4" />
+                        <path d="M8 3l0 4" />
+                        <path d="M4 11l16 0" />
+                        <path d="M8 15h2v2h-2z" />
+                      </svg>
+                    </span>
+                    <span class="ms-2 flex-grow-1">{{eventData?.objectType | capitalizeFirst
+                      }}</span>
+                  </div>
+                  <hr class="my-0">
+                  <div class="d-flex align-items-center justify-content-between fs-body">
+                    <span class="title text-dark me-1 d-flex align-items-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                        <path d="M16 3v4" />
+                        <path d="M8 3v4" />
+                        <path d="M4 11h16" />
+                        <path d="M7 14h.013" />
+                        <path d="M10.01 14h.005" />
+                        <path d="M13.01 14h.005" />
+                        <path d="M16.015 14h.005" />
+                        <path d="M13.015 17h.005" />
+                        <path d="M7.01 17h.005" />
+                        <path d="M10.01 17h.005" />
+                      </svg>
+                    </span>
+                    <span class="ms-2 flex-grow-1">{{commonService.formatDateTimeToAMPM(eventData?.eventTime)}}</span>
+                  </div>
+                  <hr class="my-0">
+                  <div class="d-flex align-items-center justify-content-between fs-body">
+
+                    <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-video">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path
+                          d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                        <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                      </svg>
+                    </span>
+                    <span class="ms-2 flex-grow-1">https://</span>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex z-index-3">
+              <div class="d-flex gap-1 flex-column h-100 w-100">
+                <div class="img image-shape h-100 d-flex position-relative">
+                  <img [src]="'data:image/jpeg;base64,' + eventData?.img"
+                    class="img-fluid alpr-radius w-100 h-100 object-fit-cover" alt="Live event image" />
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="col-sm-12 d-flex align-items-center justify-content-center gap-1 mt-3">
+          <button type="button" class="btn btn-sm btn-primary" (click)="closeModal()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

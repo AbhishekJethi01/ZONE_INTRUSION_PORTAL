@@ -1,0 +1,61 @@
+/* th.cdk-column-vehicleStatus.mat-column-vehicleStatus, td.cdk-column-vehicleStatus.mat-column-vehicleStatus {
+  width: 60px !important;
+  min-width: 60px !important;
+  max-width: 60px !important;
+  text-align: left;
+}
+th.cdk-column-action.mat-column-action{
+    width:90px;
+    min-width: 120px;
+    max-width: 120px;
+} */
+.action-btns.gap-1 {
+    gap: .15rem !important;
+}
+td .btn-xs{ min-height: 22px; padding-left: 0.2rem !important; padding-right: 0.2rem !important;display: flex;
+  align-items: center; justify-content: center;}
+td .btn-xs .feather {height: 14px;width: 14px;}
+.custom-bordered-table th,
+.custom-bordered-table td {
+  border: 1px solid #dee2e6; /* Bootstrap's default border color */
+}
+.custom-bordered-table {
+  border-collapse: collapse;
+}
+
+.mat-table {
+  table-layout: fixed !important;
+}
+
+
+.zoom-container {
+  width: 100%;
+  overflow: auto; 
+  border: 1px solid #f0f0f0;
+  position: relative;
+}
+
+.zoom-content {
+  display: inline-block;
+  transform-origin: 0 0;
+  transform-origin: top left;
+  transition: transform 0.2s ease-in-out;
+  width: 100%;
+}
+
+.zoom-img {
+  display: block;
+  width: 100%;
+  max-width: none; 
+}
+
+td.cdk-column-cameraDirection, th.cdk-column-cameraDirection, th.cdk-column-cameraIpAddress, td.cdk-column-cameraIpAddress{
+      min-width: 200px !important;max-width: 200px !important;width: 200px !important;
+}
+
+::ng-deep .mat-sort-header:hover .mat-sort-header-arrow,
+::ng-deep .mat-sort-header.mat-sort-header-sorted .mat-sort-header-arrow {
+  opacity: 1 !important;
+  color: white !important;
+}
+

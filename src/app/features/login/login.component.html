@@ -1,0 +1,74 @@
+<div class="auth-wrapper container-fluid p-0">
+  <div class="row g-0 min-vh-100">
+    <div class="col-12 col-lg-6 d-none d-lg-flex align-items-center auth-right">
+      <div id="heroCarousel" class="carousel slide w-100" data-bs-ride="carousel" data-bs-interval="6000">
+        <div class="carousel-inner">
+          <div *ngFor="let slide of slides; let i = index" class="carousel-item" [class.active]="i === 0">
+            <img [src]="slide.img" class="d-block w-100" [alt]="'Slide ' + (i + 1)">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{ slide.caption }}</h5>
+              <p>{{ slide.text }}</p>
+            </div>
+          </div>
+          <div class="carousel-indicators">
+            <button *ngFor="let slide of slides; let i = index" type="button" data-bs-target="#heroCarousel"
+              [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+              [attr.aria-label]="'Slide ' + (i + 1)">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center px-4 px-sm-5 py-5 auth-left">
+      <div class="w-100 d-flex flex-column align-items-center justifycontent-center" style="max-width: 350px;">
+        <div class="logo h1 fw-bold text-white mb-4"><img src="assets/images/reg-eye-zon-logo.svg"
+            class="full-logo d-flex" height="35" alt="" /></div>
+        <h2 class="welcome h3 fw-bold text-white mb-4">Welcome Back!</h2>
+
+        <form #loginForm="ngForm" autocomplete="off" (ngSubmit)="login()" class="w-100">
+          <!-- Dummy trap fields -->
+          <input type="text" style="display:none" autocomplete="username">
+          <input type="password" style="display:none" autocomplete="current-password">
+          <div class="mb-2">
+            <label class="form-label text-white" for="username">Username</label>
+            <input id="username" type="text" class="form-control" name="email" [(ngModel)]="userName"
+              (ngModelChange)="commonService.hideErrors(['userNameRequired','invalidCred'])"
+              placeholder="Enter Username" autofocus="">
+            <span class="text-danger d-none small" id="userNameRequired">* Username is required.</span>
+          </div>
+          <div class="mb-3 position-relative">
+            <label class="form-label text-white" for="password">Password</label>
+            <div class="input-group">
+              <input [type]="showPassword ? 'text' : 'password'" id="password" class="form-control" name="password"
+                [(ngModel)]="password"
+                (ngModelChange)="commonService.hideErrors(['passwordRequired','invalidCred'])"
+                placeholder="Enter password">
+              <button type="button" class="btn btn-outline-secondary toggle-eye" (click)="showPassword = !showPassword"
+                aria-label="Toggle password visibility">
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash-fill'"></i>
+              </button>
+            </div>
+            <span class="text-danger d-none small" id="passwordRequired">* Password is required.</span>
+          </div>
+          <div class="text-center d-flex flex-column gap-2">
+            <button type="submit" class="btn signin-btn w-100 fw-bold d-flex justify-content-center align-items-center"
+              [disabled]="isSigninLoaderDisplay">
+              <span *ngIf="!isSigninLoaderDisplay">Sign In</span>
+              <div *ngIf="isSigninLoaderDisplay" class="spinner-border spinner-border-sm text-light ms-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </button>
+            <span class="text-danger small d-none" id="invalidCred">Invalid login credentials.</span>
+            <p class="text-center small text-white mb-0">Don't have an account? <a routerLink="/signup"
+                class="fw-bold">Sign up</a></p>
+          </div>
+        </form>
+
+        <div class="brand-divider" aria-hidden="true">
+          <span></span>
+        </div>
+        <p class="text-center small mb-0 mt-4 text-white-light">© 2025 Oditek Solutions Private Limited</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,630 @@
+<div id="pageBody" class="page-wrapper fullscreen">
+    <app-sidebar class="sidebar"></app-sidebar>
+    <div class="main">
+        <app-header></app-header>
+        <main class="content live-event-container">
+            <div class="card content-card bg-transparent shadow-none border-0 mb-4 d-none">
+                <div class="card-body p-0">
+                    <form class="filter-bar row g-2 g-sm-3 align-items-end">
+                        <div class="col-12 col-sm-4 col-md-3">
+                            <label for="cName" class="form-label mb-1">Camera Name</label>
+                            <ng-select id="cName" name="cameraId" [(ngModel)]="selectedCameraId"
+                                (clear)="selectedCameraId = ''" placeholder="All">
+                                <ng-option [value]="''">All</ng-option>
+                                <ng-option [value]="val.cameraId"
+                                    *ngFor="let val of cameraArr">{{val.cameraName}}</ng-option>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-12 col-sm-4 col-md-3">
+                            <label for="cType" class="form-label mb-1">Type</label>
+                            <ng-select id="cType" name="typeId" [(ngModel)]="selectedType" (clear)="selectedType = ''"
+                                placeholder="All">
+                                <ng-option [value]="''">All</ng-option>
+                                <ng-option [value]="val.type" *ngFor="let val of typeArr">{{val.type}}</ng-option>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-12 col-sm-auto">
+                            <button type="button" class="btn btn-primary w-100 w-sm-auto" (click)="applyFilter()">
+                                Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="grid-container grid-col-4">
+                <div class="grid-item">
+                    <div class="card camera-1 border-0 card-shadow">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 d-flex align-items-center gap-2 w-100">
+                                <div class="icon-circle">
+                                    <icon [name]="'person'" class="lh-0"></icon>
+                                </div>
+                                Person
+                            </h6>
+                            <div class="header-search my-auto d-flex align-items-center gap-1">
+                                <ng-select id="cName" name="cameraId" [(ngModel)]="activePersonCameraId" (ngModelChange)="applyFilter()"
+                                    (clear)="activePersonCameraId = ''" placeholder="All"
+                                    style="min-width: 150px; max-width: 200px;">
+                                    <ng-option [value]="''">All</ng-option>
+                                    <ng-option [value]="val.cameraId"
+                                        *ngFor="let val of cameraArr">{{val.cameraName}}</ng-option>
+                                </ng-select>
+                                <i [ngClass]="isHumanOpen ? 'bi bi-dash-circle' : 'bi bi-plus-circle'"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseEntry"
+                                    [attr.aria-expanded]="true" aria-controls="collapseEntry"
+                                    class="d-block d-md-none cursor-pointer fs-6" (click)="toggleCollapse('human')"></i>
+                            </div>
+                        </div>
+                        <div id="collapseHuman" class="card-body thin-scroll collapse d-md-block"
+                            [class.show]="isHumanOpen">
+                            <div *ngFor="let person of liveEventsMap['person']; let i = index">
+                                <div class="row event-card-list d-flex g-2 align-items-start" (click)="openModal(person)">
+                                    <div class="col-4 img d-flex flex-column">
+                                        <img [src]="'data:image/jpeg;base64,' + person?.img" class="alpr-radius"
+                                        alt="Live event image" />
+                                    </div>
+                                    <div class="col-8 details d-flex gap-2 flex-column">
+                                        <div class="d-flex gap-1 flex-wrap justify-content-between">
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                                        <path d="M16 3v4" />
+                                                        <path d="M8 3v4" />
+                                                        <path d="M4 11h16" />
+                                                        <path d="M7 14h.013" />
+                                                        <path d="M10.01 14h.005" />
+                                                        <path d="M13.01 14h.005" />
+                                                        <path d="M16.015 14h.005" />
+                                                        <path d="M13.015 17h.005" />
+                                                        <path d="M7.01 17h.005" />
+                                                        <path d="M10.01 17h.005" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fs-sm"> {{commonService.formatDateTimeToAMPM(person?.eventTime)}} </span>
+                                            </div>
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-camera">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+                                                        <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                                    </svg>
+                                                </span>
+                                                <span class="text-dark fs-sm">{{person?.cameraName}}</span>
+                                            </div>
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                        <path d="M16 3l0 4" />
+                                                        <path d="M8 3l0 4" />
+                                                        <path d="M4 11l16 0" />
+                                                        <path d="M8 15h2v2h-2z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fw-500 fs-sm text-dark">{{person?.objectType | capitalizeFirst}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div
+                                            class="d-flex gap-2 gap-md-2 gap-lg-1 gap-xl-3 flex-wrap justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-video">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                                                        <path
+                                                            d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fs-sm">https://{{person?.link}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="card camera-1 border-0 card-shadow">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 d-flex align-items-center gap-2 w-100">
+                                <div class="icon-circle">
+                                    <icon [name]="'vehicle'" class="lh-0"></icon>
+                                </div>
+                                Vehicle
+                            </h6>
+                            <div class="header-search my-auto d-flex align-items-center gap-1">
+                                <ng-select id="cName" name="cameraId" [(ngModel)]="activeVehicleCameraId" (ngModelChange)="applyFilter()"
+                                    (clear)="activeVehicleCameraId = ''" placeholder="All"
+                                    style="min-width: 150px; max-width: 200px;">
+                                    <ng-option [value]="''">All</ng-option>
+                                    <ng-option [value]="val.cameraId"
+                                        *ngFor="let val of cameraArr">{{val.cameraName}}</ng-option>
+                                </ng-select>
+                                <i [ngClass]="isVehicleOpen ? 'bi bi-dash-circle' : 'bi bi-plus-circle'"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseEntry"
+                                    [attr.aria-expanded]="true" aria-controls="collapseEntry"
+                                    class="d-block d-md-none cursor-pointer fs-6"
+                                    (click)="toggleCollapse('vehicle')"></i>
+                            </div>
+                        </div>
+                        <div id="collapseVehicle" class="card-body thin-scroll collapse d-md-block"
+                            [class.show]="isVehicleOpen">
+                            <div *ngFor="let vehicle of liveEventsMap['vehicle']; let i = index">
+                                <div class="row event-card-list d-flex g-2 align-items-start" (click)="openModal(vehicle)">
+                                    <div class="col-4 img d-flex flex-column">
+                                        <img [src]="'data:image/jpeg;base64,' + vehicle?.img" class="alpr-radius"
+                                        alt="Live event image" />
+                                    </div>
+                                    <div class="col-8 details d-flex gap-2 flex-column">
+                                        <div class="d-flex gap-1 flex-wrap justify-content-between">
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                                        <path d="M16 3v4" />
+                                                        <path d="M8 3v4" />
+                                                        <path d="M4 11h16" />
+                                                        <path d="M7 14h.013" />
+                                                        <path d="M10.01 14h.005" />
+                                                        <path d="M13.01 14h.005" />
+                                                        <path d="M16.015 14h.005" />
+                                                        <path d="M13.015 17h.005" />
+                                                        <path d="M7.01 17h.005" />
+                                                        <path d="M10.01 17h.005" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fs-sm"> {{commonService.formatDateTimeToAMPM(vehicle?.eventTime)}} </span>
+                                            </div>
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-camera">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+                                                        <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                                    </svg>
+                                                </span>
+                                                <span class="text-dark fs-sm">{{vehicle?.cameraName}}</span>
+                                            </div>
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                        <path d="M16 3l0 4" />
+                                                        <path d="M8 3l0 4" />
+                                                        <path d="M4 11l16 0" />
+                                                        <path d="M8 15h2v2h-2z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fw-500 fs-sm text-dark">{{vehicle?.objectType | capitalizeFirst}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div
+                                            class="d-flex gap-2 gap-md-2 gap-lg-1 gap-xl-3 flex-wrap justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-video">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                                                        <path
+                                                            d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fs-sm">https://{{vehicle?.link}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="card camera-1 border-0 card-shadow">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 d-flex align-items-center gap-2 w-100">
+                                <div class="icon-circle">
+                                    <icon [name]="'animal'" class="lh-0"></icon>
+                                </div>
+                                Animal
+                            </h6>
+                            <div class="header-search my-auto d-flex align-items-center gap-1">
+                                <ng-select id="cName" name="cameraId" [(ngModel)]="activeAnimalCameraId" (ngModelChange)="applyFilter()"
+                                    (clear)="activeAnimalCameraId = ''" placeholder="All"
+                                    style="min-width: 150px; max-width: 200px;">
+                                    <ng-option [value]="''">All</ng-option>
+                                    <ng-option [value]="val.cameraId"
+                                        *ngFor="let val of cameraArr">{{val.cameraName}}</ng-option>
+                                </ng-select>
+                                <i [ngClass]="isAnimalOpen ? 'bi bi-dash-circle' : 'bi bi-plus-circle'"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseEntry"
+                                    [attr.aria-expanded]="true" aria-controls="collapseEntry"
+                                    class="d-block d-md-none cursor-pointer fs-6"
+                                    (click)="toggleCollapse('animal')"></i>
+                            </div>
+                        </div>
+                        <div id="collapseAnimal" class="card-body thin-scroll collapse d-md-block"
+                            [class.show]="isAnimalOpen">
+                            <div *ngFor="let animal of liveEventsMap['animal']; let i = index">
+                                <div class="row event-card-list d-flex g-2 align-items-start" (click)="openModal(animal)">
+                                    <div class="col-4 img d-flex flex-column">
+                                        <img [src]="'data:image/jpeg;base64,' + animal?.img" class="alpr-radius"
+                                        alt="Live event image" />
+                                    </div>
+                                    <div class="col-8 details d-flex gap-2 flex-column">
+                                        <div class="d-flex gap-1 flex-wrap justify-content-between">
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                                        <path d="M16 3v4" />
+                                                        <path d="M8 3v4" />
+                                                        <path d="M4 11h16" />
+                                                        <path d="M7 14h.013" />
+                                                        <path d="M10.01 14h.005" />
+                                                        <path d="M13.01 14h.005" />
+                                                        <path d="M16.015 14h.005" />
+                                                        <path d="M13.015 17h.005" />
+                                                        <path d="M7.01 17h.005" />
+                                                        <path d="M10.01 17h.005" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fs-sm"> {{commonService.formatDateTimeToAMPM(animal?.eventTime)}} </span>
+                                            </div>
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-camera">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+                                                        <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                                    </svg>
+                                                </span>
+                                                <span class="text-dark fs-sm">{{animal?.cameraName}}</span>
+                                            </div>
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                        <path d="M16 3l0 4" />
+                                                        <path d="M8 3l0 4" />
+                                                        <path d="M4 11l16 0" />
+                                                        <path d="M8 15h2v2h-2z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fw-500 fs-sm text-dark">{{animal?.objectType | capitalizeFirst}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div
+                                            class="d-flex gap-2 gap-md-2 gap-lg-1 gap-xl-3 flex-wrap justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-video">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                                                        <path
+                                                            d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fs-sm">https://{{animal?.link}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="card camera-1 border-0 card-shadow">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 d-flex align-items-center gap-2 w-100">
+                                <div class="icon-circle">
+                                    <icon [name]="'others'" class="lh-0 others-icon"></icon>
+                                </div>
+                                Others
+                            </h6>
+                            <div class="header-search my-auto d-flex align-items-center gap-1">
+                                <ng-select id="cName" name="cameraId" [(ngModel)]="activeOtherCameraId" (ngModelChange)="applyFilter()"
+                                    (clear)="activeOtherCameraId = ''" placeholder="All"
+                                    style="min-width: 150px; max-width: 200px;">
+                                    <ng-option [value]="''">All</ng-option>
+                                    <ng-option [value]="val.cameraId"
+                                        *ngFor="let val of cameraArr">{{val.cameraName}}</ng-option>
+                                </ng-select>
+                                <i [ngClass]="isOthersOpen ? 'bi bi-dash-circle' : 'bi bi-plus-circle'"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseEntry"
+                                    [attr.aria-expanded]="true" aria-controls="collapseEntry"
+                                    class="d-block d-md-none cursor-pointer fs-6"
+                                    (click)="toggleCollapse('others')"></i>
+                            </div>
+                        </div>
+                        <div id="collapseOthers" class="card-body thin-scroll collapse d-md-block"
+                            [class.show]="isOthersOpen">
+                            <div *ngFor="let other of liveEventsMap['other']; let i = index">
+                                <div class="row event-card-list d-flex g-2 align-items-start" (click)="openModal(other)">
+                                    <div class="col-4 img d-flex flex-column">
+                                        <img [src]="'data:image/jpeg;base64,' + other?.img" class="alpr-radius"
+                                        alt="Live event image" />
+                                    </div>
+                                    <div class="col-8 details d-flex gap-2 flex-column">
+                                        <div class="d-flex gap-1 flex-wrap justify-content-between">
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                                        <path d="M16 3v4" />
+                                                        <path d="M8 3v4" />
+                                                        <path d="M4 11h16" />
+                                                        <path d="M7 14h.013" />
+                                                        <path d="M10.01 14h.005" />
+                                                        <path d="M13.01 14h.005" />
+                                                        <path d="M16.015 14h.005" />
+                                                        <path d="M13.015 17h.005" />
+                                                        <path d="M7.01 17h.005" />
+                                                        <path d="M10.01 17h.005" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fs-sm"> {{commonService.formatDateTimeToAMPM(other?.eventTime)}} </span>
+                                            </div>
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-camera">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+                                                        <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                                    </svg>
+                                                </span>
+                                                <span class="text-dark fs-sm">{{other?.cameraName}}</span>
+                                            </div>
+                                            <div class="d-flex align-items-center w-100">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                        <path d="M16 3l0 4" />
+                                                        <path d="M8 3l0 4" />
+                                                        <path d="M4 11l16 0" />
+                                                        <path d="M8 15h2v2h-2z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fw-500 fs-sm text-dark">{{other?.objectType | capitalizeFirst}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div
+                                            class="d-flex gap-2 gap-md-2 gap-lg-1 gap-xl-3 flex-wrap justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-video">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                                                        <path
+                                                            d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="fs-sm">https://{{other?.link}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+
+
+<div #liveEventPopup class="modal fade cstModal modal-style-2" id="liveEventPopup" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content pt-2">
+            <div class="modal-header d-flex align-items-center text-center flex-wrap py-2 border-0">
+                <h4 class="modal-title fs-6 me-3 fw-bold text-center w-100 d-flex flex-row align-items-center gap-2"
+                    id="">
+                    <img src="assets/images/vehicle-img-icon.svg" height="32" alt="" />
+                    Event Details
+                </h4>
+                <button type="button" class="btn-close img-dark" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body z-index-3 mt-0 p-0">
+                <div class="liveEvent-list-details">
+                    <div class="row list align-items-stretch align-items-center g-0">
+                        <div class="col-md-12 d-flex z-index-3">
+                            <div class="d-flex gap-1 flex-column h-100 w-100">
+                                <div class="img image-shape h-100 d-flex position-relative">
+                                    <img [src]="'data:image/jpeg;base64,' + eventData?.img"
+                                        class="img-fluid alpr-radius w-100 h-100"
+                                        alt="Live event image" />
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex details">
+                            <div
+                                class="d-flex gap-1 flex-column border p-3 border-0 alpr-radius h-100 w-100 flex-table">
+                                <div class="d-flex align-items-center flex-wrap gap-2 fs-body">
+                                    <div
+                                        class="px-2 py-1 alpr-radius d-flex align-items-center gap-1 fs-6 fw-semibold text-nowrap type">
+                                        <icon [name]="eventData?.objectType"></icon> {{eventData?.objectType |
+                                        capitalizeFirst }}
+                                    </div>
+                                </div>
+                                <!-- <hr class="my-2"> -->
+                                <div class="row g-2 rounded-2 vehicle-details-lists d-flex p-0 mt-3">
+                                    <div
+                                        class="col-lg-4 d-flex gap-1 align-items-center justify-content-between fs-body">
+                                        <span class="title text-dark me-1 d-flex align-items-center">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-camera">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path
+                                                    d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+                                                <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                            </svg>
+                                        </span>
+                                        <span class="flex-grow-1 fw-bold">{{eventData?.cameraName}}</span>
+                                    </div>
+                                    <div
+                                        class="col-lg-4 d-flex gap-1 align-items-center justify-content-between fs-body">
+                                        <span class="title text-dark me-1 d-flex align-items-center">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path
+                                                    d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                <path d="M16 3l0 4" />
+                                                <path d="M8 3l0 4" />
+                                                <path d="M4 11l16 0" />
+                                                <path d="M8 15h2v2h-2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="flex-grow-1">{{eventData?.objectType | capitalizeFirst
+                                            }}</span>
+                                    </div>
+                                    <div
+                                        class="col-lg-4 d-flex gap-1 align-items-center justify-content-between fs-body">
+                                        <span class="title text-dark me-1 d-flex align-items-center">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path
+                                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                                <path d="M16 3v4" />
+                                                <path d="M8 3v4" />
+                                                <path d="M4 11h16" />
+                                                <path d="M7 14h.013" />
+                                                <path d="M10.01 14h.005" />
+                                                <path d="M13.01 14h.005" />
+                                                <path d="M16.015 14h.005" />
+                                                <path d="M13.015 17h.005" />
+                                                <path d="M7.01 17h.005" />
+                                                <path d="M10.01 17h.005" />
+                                            </svg>
+                                        </span>
+                                        <span class="flex-grow-1">{{commonService.formatDateTimeToAMPM(eventData?.eventTime)}}</span>
+                                    </div>
+                                    <hr class="my-3">
+                                    <div class="col-md-12 d-flex align-items-center justify-content-between fs-body">
+
+                                        <span class="fw-bold title text-dark me-1 d-flex align-items-center">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-video">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path
+                                                    d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                                                <path
+                                                    d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="ms-2 flex-grow-1">https://{{eventData?.link}}</span>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 d-flex align-items-center justify-content-center gap-1 my-3">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="closeModal()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

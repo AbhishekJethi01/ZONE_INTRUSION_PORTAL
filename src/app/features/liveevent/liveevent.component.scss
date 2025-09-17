@@ -1,0 +1,110 @@
+.grid-container {
+  display: grid;
+  gap: 1rem;
+  @for $i from 1 through 6 {
+    &.grid-col-#{$i} {
+      grid-template-columns: repeat($i, 1fr);
+    }
+  }
+  .grid-item {
+    .eventList {
+      .img {
+        span {
+          font-size: 11px !important;
+          font-weight: bold;
+        }
+      }
+    }
+    // &:first-child .card .icon-circle { background: #5C67F7; }
+    // &:nth-child(2) .card .icon-circle { background: #E45AD5; }
+    // &:nth-child(3) .card .icon-circle { background: #FE81B4; }
+    // &:nth-child(4) .card .icon-circle { background: #FF8E6F; }
+    // &.entryCard .card .icon-circle { background: rgb(43, 198, 82) !important; }
+    // &.exitCard .card .icon-circle { background: rgb(220, 53, 69) !important; }
+  }
+  &.grid-col-5,
+  &.grid-col-6 {
+    .card-header {
+      flex-direction: column;
+      align-items: self-start !important;
+    }
+    .card-body img {
+      width: 100%;
+    }
+  }
+  hr {
+    opacity: 0.15; border: none !important;
+  }
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  @media screen and (min-width: 1024px) {
+    &.grid-col-1 {
+      .grid-item {
+        .details {
+          flex-direction: row !important;
+          gap: 30px !important;
+        }
+        .img {
+          max-width: 165px;
+          flex-direction: row !important;
+        }
+      }
+    }
+  }
+  .grid-item {
+    .card-body {
+      .eventList:last-child {
+        hr {
+          display: none;
+        }
+      }
+    }
+  }
+}
+:host ::ng-deep .card-header{
+   .icon-circle{
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 55%;
+         //   background: rgba(248, 249, 251, 0.12);
+            background: linear-gradient( 145deg, #5C67F7 0%, rgb(231, 106, 53) 100% );
+            icon { 
+              svg{height: 24px;}
+              &.others-icon{ svg{ width: 18px;}}
+            }
+        }
+}
+
+
+:host ::ng-deep .event-card-list {
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.6s ease;
+  img{width: 100%;max-width: 100%;object-fit: cover; object-position: center; background-color: rgba(33, 37, 41, 0.5); max-height: 65px;}
+  &:last-child{
+    hr{ display: none;}
+  }
+  &:last-child + hr{display: none;}
+  &:hover{ 
+    cursor: pointer;
+    transition: transform 0.6s ease;
+    transform: rotateX(15deg);
+    transform-style: preserve-3d;
+  }
+  .details{
+    svg{ height: 16px;}
+  }
+}
+.vehicle-no-img{ max-height: 45px;}
+.liveEvent-list-details {
+  .type {background: linear-gradient( 145deg, #5C67F7 0%, rgb(231, 106, 53) 100% ); width: auto; display: flex;}
+}
+:host ::ng-deep .details .type{ svg { width: 22px; height: 22px;}}
+:host ::ng-deep .event-cameraType{ svg { width: 22px; height: 22px;}}
+.modal{
+  .img{&.image-shape{ max-height: 350px; border-radius: 24px 24px 4px 4px; overflow: hidden;}}
+}

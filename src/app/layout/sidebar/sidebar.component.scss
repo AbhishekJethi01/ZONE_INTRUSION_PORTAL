@@ -1,0 +1,11 @@
+.sidebar-nav .sidebar-item { position: relative;}
+.log-out-menu{
+    // background: linear-gradient( 145deg, #5C67F7 0%, rgb(231, 106, 53) 100% );
+    background: var(--color-primary);
+    &:hover {
+    background: var(--dark-dark-color-2);
+    }
+}
+@media screen and (min-width: 768px) {
+.sidebar-nav .sidebar-link + .submenu{ position: fixed; top: auto; left: 100%; transform: translate(-5px, 0px);}
+}

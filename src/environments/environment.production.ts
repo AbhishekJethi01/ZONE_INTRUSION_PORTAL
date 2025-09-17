@@ -1,0 +1,20 @@
+export const environment = {
+    production: false,
+    // hostUrl: 'http://10.30.30.63',
+    // baseUrl: 'htpp://10.30.30.63/login',
+    // apiUrl: 'http://10.30.30.63:8010/api',
+    // wsUrl: 'ws://10.30.30.63:8010/api',
+    // imageBaseUrl: 'http://10.30.30.63:8010/alpr-images',
+    hostUrl: 'http://10.30.30.60/Zone',
+    baseUrl: 'htpp://10.30.30.60/Zone/login',
+    apiUrl: 'http://10.30.30.60:8010/api/Zone',
+    wsUrl: 'ws://10.30.30.60:8010/api',
+    imageBaseUrl: 'http://10.30.30.60:8010/zone-images',
+    // hostUrl: 'http://192.168.5.122',
+    // baseUrl: 'htpp://192.168.5.122/login',
+    // apiUrl: 'http://192.168.5.122:8010/api',
+    // wsUrl: 'ws://192.168.5.122:8010/api',
+    // imageBaseUrl: 'http://192.168.5.122:8010/alpr-images',
+    version: '0.0.0',
+    maxExcelRecord: null
+}

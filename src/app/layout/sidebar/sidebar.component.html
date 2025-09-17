@@ -1,0 +1,96 @@
+<nav>
+    <a class="sidebar-toggle" (click)="toggleSlide()">
+      <img class="cursor-pointr" src="assets/images/menu-bar.svg">
+    </a>
+    <a class="sidebar-brand text-center w-100 d-block d-md-none mb-4" href="index.html">
+      <img src="assets/images/reg-eye-zon-logo.svg" class="full-logo d-flex" alt="" />
+      <!-- <img src="assets/images/logo-symble.svg" class="symble-logo m-auto d-none d-md-block" alt="" /> -->
+    </a>
+    <ul class="sidebar-nav thin-scroll" id="alprSidemenu">
+      <li class="sidebar-item" routerLinkActive="active">
+        <a class="sidebar-link d-flex align-items-center main-menu-item" [routerLink]="'/Zone/dashboard'">
+          <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /><path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /></svg>
+          <span class="text">Dashboard</span></a>
+      </li>
+      <hr class="my-0 my-md-2" style="border-top-color: #94A8BF;">
+      <li class="sidebar-item" routerLinkActive="active">
+        <a class="sidebar-link d-flex align-items-center main-menu-item" [routerLink]="'/Zone/liveevent'">
+          <svg  width="24" height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-live-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" /><path d="M15.9 20.11l0 .01" /><path d="M19.04 17.61l0 .01" /><path d="M20.77 14l0 .01" /><path d="M20.77 10l0 .01" /><path d="M19.04 6.39l0 .01" /><path d="M15.9 3.89l0 .01" /><path d="M12 3l0 .01" /><path d="M8.1 3.89l0 .01" /><path d="M4.96 6.39l0 .01" /><path d="M3.23 10l0 .01" /><path d="M3.23 14l0 .01" /><path d="M4.96 17.61l0 .01" /><path d="M8.1 20.11l0 .01" /><path d="M12 21l0 .01" /></svg>
+          <span class="text" >Live Event</span></a>
+      </li>
+      <!-- <hr class="my-0 my-md-2" style="border-top-color: #94A8BF;">
+      <li class="sidebar-item" routerLinkActive="active">
+        <a class="sidebar-link d-flex align-items-center main-menu-item" [routerLink]="">
+          <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.25"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-barrier-block"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v7a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z" /><path d="M7 16v4" /><path d="M7.5 16l9 -9" /><path d="M13.5 16l6.5 -6.5" /><path d="M4 13.5l6.5 -6.5" /><path d="M17 16v4" /><path d="M5 20h4" /><path d="M15 20h4" /><path d="M17 7v-2" /><path d="M7 7v-2" /></svg>
+          <span class="text" >Boom Control</span></a>
+      </li> -->
+      <hr class="my-0 my-md-2" style="border-top-color: #94A8BF;">
+      <li class="sidebar-item" routerLinkActive="active">
+        <a class="sidebar-link d-flex align-items-center main-menu-item" [routerLink]="'/Zone/eventviewer'">
+          <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+          <span class="text">Event Viewer</span></a>
+      </li>
+
+        <!-- <hr class="my-0 my-md-2" style="border-top-color: #94A8BF;">
+        <li class="sidebar-item position-relative" routerLinkActive="active">
+          <a class="sidebar-link d-flex align-items-center main-menu-item" [routerLink]="">
+            <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-bell"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>
+            <span class="text">Notifications</span></a>
+          <div class="notification-indicator">120</div>
+        </li> -->
+
+      <hr class="my-0 my-md-2" style="border-top-color: #94A8BF;">
+      
+        <li class="sidebar-item" routerLinkActive="active">
+          <a class="sidebar-link d-flex align-items-center main-menu-item menu-dropdown" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#settings" aria-expanded="false" aria-controls="settings">
+            <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
+            <span class="text">Settings</span>  
+            <span class="menu-toggle-drop d-flex ms-auto">
+              <i class="bx bx-chevron-right fs-4"></i>
+            </span>
+          </a>
+          <div id="settings" class="submenu accordion-collapse collapse show" data-bs-parent="#alprSidemenu">
+            <ul>
+              <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link d-flex align-items-center" [routerLink]="'/Zone/camera'">
+                  <div class="me-1">
+                    <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-camera"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /><path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
+                  </div> 
+                  <span class="text">Camera</span> 
+                </a>
+              </li>
+              <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link d-flex align-items-center" [routerLink]="'/Zone/roi'">
+                  <div class="me-1">
+                    <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-camera"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /><path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
+                  </div> 
+                  <span class="text">Camera ROI</span> 
+                </a>
+              </li>
+              <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link d-flex align-items-center" [routerLink]="'/Zone/user'">
+                  <div class="me-1">
+                    <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-cog"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h2.5" /><path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19.001 15.5v1.5" /><path d="M19.001 21v1.5" /><path d="M22.032 17.25l-1.299 .75" /><path d="M17.27 20l-1.3 .75" /><path d="M15.97 17.25l1.3 .75" /><path d="M20.733 20l1.3 .75" /></svg>
+                  </div> 
+                  <span class="text">User</span> 
+                </a>
+              </li>
+              <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link d-flex align-items-center" [routerLink]="'/Zone/configuration'">
+                  <div class="me-1">
+                    <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-settings-cog"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.003 21c-.732 .001 -1.465 -.438 -1.678 -1.317a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c.886 .215 1.325 .957 1.318 1.694" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19.001 15.5v1.5" /><path d="M19.001 21v1.5" /><path d="M22.032 17.25l-1.299 .75" /><path d="M17.27 20l-1.3 .75" /><path d="M15.97 17.25l1.3 .75" /><path d="M20.733 20l1.3 .75" /></svg>
+                  </div> 
+                  <span class="text">Configuration</span> 
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <hr class="my-0 my-md-2" style="border-top-color: #94A8BF;">
+      <li class="sidebar-item position-relative mt-3 cursor-pointer" routerLinkActive="active">
+        <a class="sidebar-link d-flex align-items-center main-menu-item log-out-menu alpr-radius text-white fw-500" (click)="logout()">
+          <svg  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
+           <span class="text">Log out</span></a>
+      </li>
+    </ul>
+</nav>

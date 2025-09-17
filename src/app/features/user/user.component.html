@@ -1,0 +1,161 @@
+<div id="pageBody" class="page-wrapper fullscreen">
+  <app-sidebar class="sidebar"></app-sidebar>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+      <div class="row g-2 g-md-3 align-items-stretch">
+        <div class="col-12 d-flex align-items-center flex-wrap d-md-none">
+          <h3 class="card-title mb-0">User Management</h3>
+        </div>
+        <div class="col-12">
+          <div class="dt-table">
+            <div class="d-flex align-items-center mb-1">
+              <div class="d-flex align-items-center">
+                <label class="me-2 mb-0">Search:</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="filterValue" (input)="debounce.next($event)" placeholder="Type to search" />
+              </div>
+              <div class="ms-auto d-flex align-items-center gap-1">
+                <button [disabled]="loginUserName.toLowerCase() != 'admin'" id="btnAddcamers" class="btn btn-primary btn-sm" (click)="openModal('add')">
+                  <i data-feather="plus"></i> Add User
+                </button>
+              </div>
+            </div>
+            <app-shareable-table [dataSource]="dataSource" [columns]="columns" [actionButtons]="actionButtons"
+              [length]="length" (pageChange)="pageChanged($event)" (sortChange)="announceSortChange($event)"
+              (navigationMode)="handleNavigationMode($event)" [tableName]="tableName"></app-shareable-table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Add/Edit User -->
+<div class="modal fade cstModal modal-style-2" id="userModel" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content pt-2">
+      <div class="modal-header d-flex align-items-center text-center flex-wrap py-2 border-0">
+        <h4 class="modal-title fs-6 me-0 fw-bold text-center w-100 d-flex flex-row align-items-center gap-2"
+          id="liveEventPopupLabel">
+          <img src="assets/images/create-new-account.svg" height="32" alt="" />{{isEditMode ? 'Edit' : 'Add'}} User
+        </h4>
+        <button type="button" class="btn-close img-dark" data-bs-dismiss="modal" (click)="closeModal()"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3 mt-0">
+        <form #userForm="ngForm" autocomplete="off" (ngSubmit)="userFormSubmit(userForm)">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-2">
+                <label for="UserName" class="form-label">User Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="UserName" name="userName" [(ngModel)]="model.userName"
+                  (ngModelChange)="onChange($event,'userName');commonService.hideErrors(['userRequired', 'userExists'])" [disabled]="isEditMode"
+                  placeholder="Enter user name">
+                <small class="text-danger d-none" id="userRequired">User name is required.</small>
+                <small class="text-danger d-none" id="userExists">User name exists.</small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-2">
+                <label for="PhoneNumber" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                <input maxlength="10" type="text" class="form-control" id="PhoneNumber" name="phoneNumber"
+                  [(ngModel)]="model.phoneNumber"
+                  (ngModelChange)="onChange($event,'phoneNumber');commonService.hideErrors(['phoneRequired','phoneExists'])"
+                  (keydown)="commonService.blockNonNumericKeys($event)"
+                  (paste)="commonService.onPasteOnlyNumbers($event)" placeholder="Enter phone number">
+                <small class="text-danger d-none" id="phoneRequired">Phone Number is required.</small>
+                <small class="text-danger d-none" id="phoneExists">Phone Number exists.</small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-2">
+                <label for="emailID" class="form-label">Email ID</label>
+                <input type="email" class="form-control" id="emailID" name="emailId" [(ngModel)]="model.emailId"
+                  (ngModelChange)="onChange($event,'emailId');commonService.hideErrors(['emailValid','emailIdExists'])"
+                  placeholder="Enter email ID">
+                <small class="text-danger d-none" id="emailValid">Invalid email format.</small>
+                <small class="text-danger d-none" id="emailIdExists">Email ID exists.</small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-2">
+                <label for="Password" class="form-label">Password <span class="text-danger">*</span></label>
+                <div class="position-relative">
+                  <input type="password" #passwordInput class="form-control pe-5" id="Password" name="password"
+                    [(ngModel)]="password" (ngModelChange)="commonService.hideErrors(['passRequired','passValid'])"
+                    placeholder="Enter Password" />
+                  <i class="bi bi-eye-slash-fill passwordIcon" (click)="togglePasswordVisibility()" #toggleIcon
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                </div>
+                <small class="text-danger d-none" id="passRequired">Password is required.</small>
+                <small class="text-danger d-none" id="passValid">
+                  Password must be a minimum of 8 characters and include one character [!,&#64;,#,$,%,^,&,*,(,),_].
+                </small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-2">
+                <label for="ConfirmPassword" class="form-label">Confirm Password <span
+                    class="text-danger">*</span></label>
+                <div class="position-relative">
+                  <input type="password" #confpasswordInput class="form-control pe-5" id="ConfirmPassword"
+                    name="ConfirmPassword" [(ngModel)]="confirmPassword"
+                    (ngModelChange)="commonService.hideErrors(['confirmPassRequired'])" placeholder="Enter Password" />
+                  <i class="bi bi-eye-slash-fill passwordIcon" #conftoggleIcon
+                    (click)="toggleConfirmPasswordVisibility()"
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                </div>
+                <small class="text-danger d-none" id="confirmPassRequired">
+                  Confirm Password doesn't match with Password.
+                </small>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="d-flex flex-column gap-1">
+            <div
+              class="d-flex align-items-center justify-content-between alpr-radius py-1 ps-2 border bg-white permission-row">
+              <label class="text-primary"><i class="bi bi-car-front me-1"></i>Vehicle Mgmt.</label>
+              <div class="d-flex align-items-center">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="vehicleEnable" name="vehicleMgmt">
+                  <label class="form-check-label" for="vehicleEnable">Enable</label>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex align-items-center justify-content-between alpr-radius py-1 ps-2 border bg-white permission-row">
+              <label class="text-primary"><i class="bi bi-shield-lock me-1"></i>Policy Mgmt.</label>
+              <div class="d-flex align-items-center">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="policyEnable" name="policyMgmt">
+                  <label class="form-check-label" for="policyEnable">Enable</label>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex align-items-center justify-content-between alpr-radius py-1 ps-2 border bg-white permission-row">
+              <label class="text-primary"><i class="bi bi-bell me-1"></i>Notification Mgmt.</label>
+              <div class="d-flex align-items-center">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="notificationEnable" name="notificationMgmt">
+                  <label class="form-check-label" for="notificationEnable">Enable</label>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-sm-12 d-flex align-items-center justify-content-center gap-1 mt-3">
+            <button class="btn btn-sm btn-primary" type="submit">Save</button>
+            <button class="btn btn-sm btn-warning" type="button" (click)="resetForm()">Reset</button>
+            <button class="btn btn-sm btn-danger" type="button" data-bs-dismiss="modal"
+              (click)="closeModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
