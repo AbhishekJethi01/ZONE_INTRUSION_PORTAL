@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './roi.component.html',
   styleUrl: './roi.component.scss'
 })
+
 export class RoiComponent {
   private savedRoi: {
     roiStartPercentageWidth: number;
