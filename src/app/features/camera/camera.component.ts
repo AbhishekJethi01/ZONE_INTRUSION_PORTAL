@@ -63,9 +63,9 @@ export class CameraComponent {
   ngOnInit() {
     this.getCamera();
     this.updateCameraStatuses();
-    // this.statusInterval = setInterval(() => {
-    //   this.updateCameraStatuses();
-    // }, 10000);
+    this.statusInterval = setInterval(() => {
+      this.updateCameraStatuses();
+    }, 10000);
   }
 
   statusInterval: any;
