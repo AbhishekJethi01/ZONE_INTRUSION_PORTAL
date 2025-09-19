@@ -1,51 +1,65 @@
 <div id="pageBody" class="page-wrapper fullscreen">
-    <app-sidebar class="sidebar"></app-sidebar>
-    <div class="main">
-        <app-header></app-header>
-        <main class="content">
-            <div class="row g-3">
-                <div id="livecamera-container" class="col-md-12 col-xl-12">
-                    <div class="card content-card bg-transparent shadow-none border-0">
-                        <div
-                            class="card-header border-0 d-flex align-items-center flex-wrap bg-transparent dark-bg-transparent px-0 pt-0 pb-1">
-                            <span class="card-title mb-0 d-flex align-items-center gap-2 fs-6 me-1">Camera
-                                Selection:</span>
-                            <div class="header-search my-auto">
-                                <ng-select id="camera" name="camera" [(ngModel)]="selectedCamera" (ngModelChange)="changeCameraDropdown($event)" style="min-width: 150px; max-width: 200px;">
-                                    <!-- <ng-option [value]="''" selected>Select</ng-option> -->
-                                    <ng-container *ngFor="let camera of cameraArr">
-                                        <ng-option [value]="camera.cameraName">{{ camera.cameraName }}</ng-option>
-                                    </ng-container>
-                                </ng-select>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <form>
-                                <div class="roi-img alpr-radius">
-                                    <div class="image-wrapper position-relative" #imageWrapper>
-                                        <img #snapshotImage [src]="snapshotUrl" class="roi-image" (load)="onImageLoad()"
-                                            *ngIf="snapshotUrl && !cameraDisconnected" />
-                                        <canvas #roiCanvas class="roi-canvas" *ngIf="!cameraDisconnected"></canvas>
+  <app-sidebar class="sidebar"></app-sidebar>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+      <div class="row g-3">
+        <div id="livecamera-container" class="col-12">
+          <div class="card content-card bg-transparent shadow-none border-0">
 
-                                        <div *ngIf="cameraDisconnected" class="camera-disconnected-overlay">
-                                            Camera Disconnected
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12 d-flex align-items-center gap-1 mt-3 justify-content-center">
-                                    <button class="btn btn-sm btn-primary" type="button"
-                                        (click)="updateCamera()">Save</button>
-                                    <button class="btn btn-sm btn-danger" type="button"
-                                        (click)="cancelRoidraw()">Cancel</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
+            <!-- Camera selection -->
+            <div class="card-header border-0 d-flex align-items-center flex-wrap bg-transparent px-0 pt-0 pb-1">
+              <span class="card-title mb-0 d-flex align-items-center gap-2 fs-6 me-1">
+                Camera Selection:
+              </span>
+              <div class="header-search my-auto">
+                <ng-select id="camera" name="camera"
+                  [(ngModel)]="selectedCamera"
+                  (ngModelChange)="changeCameraDropdown($event)"
+                  style="min-width: 150px; max-width: 300px;">
+                  <ng-container *ngFor="let camera of cameraArr">
+                    <ng-option [value]="camera">{{ camera.cameraName }}</ng-option>
+                  </ng-container>
+                </ng-select>
+              </div>
             </div>
-        </main>
-        <!-- <app-footer class="mt-auto"></app-footer> -->
-    </div>
+
+            <!-- Image + Canvas -->
+            <div class="card-body p-0">
+              <div class="roi-img alpr-radius">
+                <div class="image-wrapper position-relative" #imageWrapper>
+
+                  <!-- Snapshot image -->
+                  <img #snapshotImage [src]="snapshotUrl" class="roi-image" (load)="onImageLoad()" alt="cam image" />
+
+                  <!-- Canvas for drawing polygons -->
+                  <canvas #roiCanvas class="roi-canvas" (mousedown)="onCanvasMouseDown($event)"></canvas>
+
+                  <!-- ROI Delete Buttons -->
+                <ng-container *ngFor="let roi of rois">
+                    <button *ngIf="!roi.isDeleted" class="roi-delete-btn" [style.left.%]="getTopRightVertex(roi).x"
+                        [style.top.%]="getTopRightVertex(roi).y" (click)="removeRoi(roi)">
+                        ❌
+                    </button>
+                </ng-container>
+
+                  <!-- Camera disconnected overlay -->
+                  <div *ngIf="cameraDisconnected" class="camera-disconnected-overlay">
+                    Camera Disconnected
+                  </div>
+                </div>
+              </div>
+
+              <!-- Save / Cancel buttons -->
+              <div class="col-12 d-flex align-items-center gap-2 mt-3 justify-content-center">
+                <button class="btn btn-sm btn-primary" type="button" (click)="saveChanges()">Save</button>
+                <button class="btn btn-sm btn-secondary" type="button" (click)="cancelChanges()">Cancel</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 </div>

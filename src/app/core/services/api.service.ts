@@ -70,4 +70,16 @@ export class ApiService {
     };
     return this.http.delete(path + id, this.httpOptions)
   }
+
+  deleteBulk(path: string, ids: number[]): Observable<any> {
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    })
+  };
+  // The backend expects an array of IDs in the body
+  return this.http.request('delete', path, { body: ids, ...httpOptions });
+}
+
 }

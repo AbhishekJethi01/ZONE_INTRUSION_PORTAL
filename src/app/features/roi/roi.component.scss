@@ -1,70 +1,58 @@
-.selection{position: absolute;top: 45%;left: 10%;background: rgba(0, 0, 0, 0.5);border: 5px solid #fbae17;width: 80%;height: 260px;}
-
-
 .roi-img {
-  height: calc(100vh - 0px);
-  max-height: calc(100vh - 110px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #000;
-}
- @media screen and (max-width: 767px) {.roi-img {height: calc(40vh - 0px);}}
-.image-wrapper {
   position: relative;
-  display: inline-block;
   width: 100%;
-  height: 100%;
-}
+  max-height: 700px;
+  overflow: hidden;
 
-.roi-image {
-  display: block;
-  height: 100%;
-  width: 100%;
-  max-height: 100%;
-  border-radius: 2px;
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .roi-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  .roi-canvas {
     position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  object-fit:contain;
-  object-position: center;
-  display: block;
-  background-size: cover;
-  height: 100%;
-}
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
 
-.roi-canvas {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: all;
-  cursor: crosshair;
-}
-::ng-deep ng-select .ng-value-container {
-  padding-right: 1.5rem; /* Add more space inside the box */
-}
+  .roi-delete-btn {
+    position: absolute;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 0, 0, 0.8);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-::ng-deep ng-select .ng-clear-wrapper {
-  margin-left: 0.5rem; /* Add space between text and (×) icon */
-}
-
-.camera-disconnected-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  border: none; /* Remove border */
-  border-radius: 0; /* Optional: reset rounding */
+  .camera-disconnected-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

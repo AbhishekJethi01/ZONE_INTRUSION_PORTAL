@@ -60,4 +60,29 @@ export class CameraService {
       responseType: 'blob'
     });
   }
+
+  getRois(cameraId: number) {
+    const path = this.apiUrl + `/CameraRoi/GetByCamera`;
+    let params: QueryParam[] = [];
+    params.push(new QueryParam('cameraId', cameraId));
+    return this.apiService.get(path, params);
+  }
+
+
+  createRoi(data: any) {
+    const path = this.apiUrl + `/CameraRoi`;
+    return this.apiService.post(path, data)
+  }
+
+
+  updateRoi(data: any[]) {
+   const path = this.apiUrl + `/CameraRoi/`
+    return this.apiService.patch(path, 0, data);
+  }
+
+
+  deleteRoi(ids: number[]) {
+    const path = this.apiUrl + `/CameraRoi/`;
+    return this.apiService.deleteBulk(path, ids);
+  }
 }
